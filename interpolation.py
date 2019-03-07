@@ -7,13 +7,11 @@ def difference_quotients(x, f):
     """
     n = len(f)
 
-    dq = [f[i] for i in range(0, n)]
+    dq = [f[i] for i in range(n)]
 
-    for j in range(0, n):
-        i = n - 1
-        while i >= j:
-            dq[i + 1] = (dq[i + 1] - dq[i]) / (x[i + 1] - x[i - j + 1])
-            i -= 1
+    for j in range(1, n):
+        for i in range(n-1, j, -1):
+            dq[i] = (dq[i] - dq[i-1]) / (x[i] - x[i-j])
     return dq
 
 
@@ -26,12 +24,10 @@ def newton_polynomial_value(x, fx, t):
     :param t: point
     :return: value in point t
     """
-    k = len(fx) - 2
-    nt = fx[k+1]
+    nt = fx[len(x)-1]
 
-    while k > 0:
+    for k in range(len(x)-1, 0, -1):
         nt = fx[k] + (t-x[k]) * nt
-        k -= 1
     return nt
 
 
@@ -42,14 +38,35 @@ def natural_form_coefficients(x, fx):
     :param fx: list of difference quotients f(x0), f(x0,x1), ..., f(x0,...,xn)
     :return: list of coefficients
     """
-    n = len(fx) - 1
+    n = len(fx)
     a = list()
     a[n] = fx[n]
-    i = n - 1
 
-    while i > 0:
+    for i in range(n-1, 0, -1):
         a[i] = fx[i]
-        for k in range(i, n):
-            a[k] -= x[i] * a[k+1]
-        i -= 1
+        for k in range(i-1, n):
+            a[k] -= x[i] * a[k]
     return a
+
+
+def get_original_axes(f, a, b, n, accuracy=40):
+    points_number = n * accuracy
+    distance = (b-a) / points_number
+    x_axis = [a + i * distance for i in range(points_number)]
+    y_axis = [f(x_axis[i]) for i in range(points_number)]
+    return x_axis, y_axis
+
+
+def get_interpolation_axes(f, a, b, n, accuracy=40):
+    h = (b - a) / n
+    x = [a + i * h for i in range(n)]
+    fx = [f(x[i]) for i in range(n)]
+
+    dq = difference_quotients(x, fx)
+
+    points_number = n * accuracy
+    distance = (b - a) / points_number
+    x_axis = [a + i * distance for i in range(points_number)]
+
+    npv = [newton_polynomial_value(x, dq, x_axis[i]) for i in range(len(x_axis))]
+    return x_axis, npv
