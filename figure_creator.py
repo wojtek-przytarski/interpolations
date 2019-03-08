@@ -18,6 +18,7 @@ class FigureCreator:
         """
         img = io.BytesIO()
         fig = plt.figure()
+        plt.grid()
         axis = fig.add_subplot(1, 1, 1)
         for plot in plots:
             x_axis, y_axis = plot
