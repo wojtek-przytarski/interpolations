@@ -3,12 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Interpolation</title>
+
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-<div>
-    <img src="data:image/png;base64, {{ plots.original }}">
-    <img src="data:image/png;base64, {{ plots.interpolated }}">
-    <img src="data:image/png;base64, {{ plots.both }}">
+<div class="container">
+    <div class="row">
+        <div class="col-25">
+            <label for="params_f">Function f(x):</label>
+        </div>
+        <div class="col-25">
+            <input type="text" id="params_f" name="params_f">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="params_a">Interval from:</label>
+        </div>
+        <div class="col-25">
+            <input type="text" id="params_a" name="params_a">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="params_b">Interval to:</label>
+        </div>
+        <div class="col-25">
+            <input type="text" id="params_b" name="params_b">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="params_n">Polynomial degree:</label>
+        </div>
+        <div class="col-25">
+            <input type="text" id="params_n" name="params_n">
+        </div>
+    </div>
+    <button>Run</button>
+
+    <hr>
+
+    {% if error %}
+        <div>
+            Error during execution: {{ error }}
+        </div>
+    {% else %}
+        <img src="data:image/png;base64, {{ plots.original }}">
+        <img src="data:image/png;base64, {{ plots.interpolated }}">
+        <img src="data:image/png;base64, {{ plots.both }}">
+    {% endif %}
 </div>
 </body>
 </html>
