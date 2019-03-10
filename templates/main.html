@@ -13,7 +13,7 @@
             <label for="params_f">Function f(x):</label>
         </div>
         <div class="col-25">
-            <input type="text" id="params_f" name="params_f">
+            <input type="text" id="params_f" name="params_f" value="{{ params.f }}">
         </div>
     </div>
     <div class="row">
@@ -21,7 +21,7 @@
             <label for="params_a">Interval from:</label>
         </div>
         <div class="col-25">
-            <input type="text" id="params_a" name="params_a">
+            <input type="text" id="params_a" name="params_a" value="{{ params.a }}">
         </div>
     </div>
     <div class="row">
@@ -29,7 +29,7 @@
             <label for="params_b">Interval to:</label>
         </div>
         <div class="col-25">
-            <input type="text" id="params_b" name="params_b">
+            <input type="text" id="params_b" name="params_b" value="{{ params.b }}">
         </div>
     </div>
     <div class="row">
@@ -37,10 +37,10 @@
             <label for="params_n">Polynomial degree:</label>
         </div>
         <div class="col-25">
-            <input type="text" id="params_n" name="params_n">
+            <input type="text" id="params_n" name="params_n" value="{{ params.n }}">
         </div>
     </div>
-    <button>Run</button>
+    <button onclick="sendData()">Run</button>
 
     <hr>
 
@@ -55,4 +55,5 @@
     {% endif %}
 </div>
 </body>
+<script src="/static/js/form.js?version=24"></script>
 </html>
