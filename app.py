@@ -43,5 +43,4 @@ def get_plots(f, a, b, n):
 
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+    app.run(debug=True)

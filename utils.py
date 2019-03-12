@@ -8,4 +8,3 @@ def check_if_request_has_required_params(request_args, required_params):
             missing_args.append(param)
     if missing_args:
         raise RequiredArgumentsMissing('Following arguments missing: {}'.format(', '.join(missing_args)))
-
