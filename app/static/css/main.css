@@ -2,7 +2,17 @@ label {
     display: inline-block;
 }
 
+h1 {
+  text-align: center;
+}
+
+.examples li {
+  width: fit-content;
+}
+
 .container {
+  width: 80%;
+  margin-left: 10%;
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
@@ -12,6 +22,20 @@ label {
   float: left;
   width: 25%;
   margin-top: 6px;
+}
+
+.col-50 {
+  width: 49.5%;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.col-50:last-of-type {
+  margin-right: 0;
+}
+
+.col-50 img {
+  max-width: 100%;
 }
 
 .col-75 {
