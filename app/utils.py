@@ -1,4 +1,4 @@
-from exceptions import RequiredArgumentsMissing
+from app.exceptions import RequiredArgumentsMissing
 
 
 def check_if_request_has_required_params(request_args, required_params):
