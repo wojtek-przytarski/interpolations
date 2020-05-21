@@ -57,6 +57,19 @@ def get_original_axes(f, a, b, n, accuracy=40):
     return x_axis, y_axis
 
 
+def get_original_points(f, a, b, n, accuracy=40):
+    points_number = n * accuracy
+    distance = (b-a) / points_number
+    data = []
+    for i in range(points_number):
+        x = a + i * distance
+        data.append({
+            'x': x,
+            'y': f(x)
+        })
+    return data
+
+
 def get_interpolation_axes(f, a, b, n, accuracy=40):
     h = (b - a) / n
     x = [a + i * h for i in range(n)]
@@ -70,3 +83,22 @@ def get_interpolation_axes(f, a, b, n, accuracy=40):
 
     npv = [newton_polynomial_value(x, dq, x_axis[i]) for i in range(len(x_axis))]
     return x_axis, npv
+
+
+def get_interpolation_points(f, a, b, n, accuracy=40):
+    h = (b - a) / n
+    x = [a + i * h for i in range(n)]
+    fx = [f(x[i]) for i in range(n)]
+
+    dq = difference_quotients(x, fx)
+
+    points_number = n * accuracy
+    distance = (b - a) / points_number
+    data = []
+    for i in range(points_number):
+        xi = a + i * distance
+        data.append({
+            'x': xi,
+            'y': newton_polynomial_value(x, dq, xi)
+        })
+    return data
