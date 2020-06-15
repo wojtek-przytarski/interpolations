@@ -1,2 +1,2 @@
 class RequiredArgumentsMissing(Exception):
-    pass
+    ...

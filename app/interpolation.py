@@ -1,4 +1,7 @@
-def difference_quotients(x, f):
+from typing import List
+
+
+def difference_quotients(x: List[float], f: List[float]) -> List[float]:
     """
     Counts difference quotients for given nodes and function values
     :param x: list of nodes x0,...,xn
@@ -15,7 +18,7 @@ def difference_quotients(x, f):
     return dq
 
 
-def newton_polynomial_value(x, fx, t):
+def newton_polynomial_value(x: List[float], fx: List[float], t: float) -> float:
     """
     Counts value of nth degree polynomial in point t.
     It uses Horner's method.
@@ -31,7 +34,7 @@ def newton_polynomial_value(x, fx, t):
     return nt
 
 
-def natural_form_coefficients(x, fx):
+def natural_form_coefficients(x: List[float], fx: List[float]) -> List[float]:
     """
     Counts coefficients of natural form.
     :param x: list of nodes x0,...,xn
@@ -49,56 +52,25 @@ def natural_form_coefficients(x, fx):
     return a
 
 
-def get_original_axes(f, a, b, n, accuracy=40):
+def get_interpolation_axes(f: callable, a: float, b: float, n: int, accuracy: int = 40) -> dict:
+    """
+    Count values of x, y and npv and return it as lists of values.
+    """
+    h = (b - a) / n
+    x = [a + i * h for i in range(n)]
+    fx = [f(x[i]) for i in range(n)]
+
+    dq = difference_quotients(x, fx)
+
     points_number = n * accuracy
-    distance = (b-a) / points_number
+    distance = (b - a) / points_number
+
     x_axis = [a + i * distance for i in range(points_number)]
     y_axis = [f(x_axis[i]) for i in range(points_number)]
-    return x_axis, y_axis
+    npv = [newton_polynomial_value(x, dq, x_axis[i]) for i in range(points_number)]
 
-
-def get_original_points(f, a, b, n, accuracy=40):
-    points_number = n * accuracy
-    distance = (b-a) / points_number
-    data = []
-    for i in range(points_number):
-        x = a + i * distance
-        data.append({
-            'x': x,
-            'y': f(x)
-        })
-    return data
-
-
-def get_interpolation_axes(f, a, b, n, accuracy=40):
-    h = (b - a) / n
-    x = [a + i * h for i in range(n)]
-    fx = [f(x[i]) for i in range(n)]
-
-    dq = difference_quotients(x, fx)
-
-    points_number = n * accuracy
-    distance = (b - a) / points_number
-    x_axis = [a + i * distance for i in range(points_number)]
-
-    npv = [newton_polynomial_value(x, dq, x_axis[i]) for i in range(len(x_axis))]
-    return x_axis, npv
-
-
-def get_interpolation_points(f, a, b, n, accuracy=40):
-    h = (b - a) / n
-    x = [a + i * h for i in range(n)]
-    fx = [f(x[i]) for i in range(n)]
-
-    dq = difference_quotients(x, fx)
-
-    points_number = n * accuracy
-    distance = (b - a) / points_number
-    data = []
-    for i in range(points_number):
-        xi = a + i * distance
-        data.append({
-            'x': xi,
-            'y': newton_polynomial_value(x, dq, xi)
-        })
-    return data
+    return {
+        'x': x_axis,
+        'y': y_axis,
+        'npv': npv,
+    }

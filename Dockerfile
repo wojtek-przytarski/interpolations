@@ -1,4 +1,4 @@
-FROM python:3.7.1-stretch
+FROM python:3.8.2-slim-buster
 
 RUN mkdir -p /app
 
